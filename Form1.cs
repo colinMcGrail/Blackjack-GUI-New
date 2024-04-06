@@ -29,22 +29,27 @@ namespace Blackjack_GUI_temp1
 
             game = new Game();
 
-            addtoPicturebox(game.playerhand.cardlist[0], playerbox0);
-            addtoPicturebox(game.playerhand.cardlist[1], playerbox1);
-            addtoPicturebox(game.dealerhand.cardlist[0], dealerbox0);
-            addtoPicturebox(new Card(null, null), dealerbox1);
+            AddtoPicturebox(game.playerhand.cardlist[0], playerbox0);
+            AddtoPicturebox(game.playerhand.cardlist[1], playerbox1);
+            AddtoPicturebox(game.dealerhand.cardlist[0], dealerbox0);
+            AddtoPicturebox(new Card(null, null), dealerbox1);
             playercardcount = 2;
             dealercardcount = 2;
 
             if (game.playerhand.sum() == 21)
             {
-                Application.Run(new GameEndDialog("Blackjack! You win!"));
-                goto start;
+                this.Hide();
+                GameEndDialog di = new GameEndDialog("Blackjack! You win!");
+                di.ShowDialog();
+                this.Close();
             }
             else if (game.dealerhand.sum() == 21)
             {
-                Application.Run(new GameEndDialog("Dealer wins by blackjack."));
-                goto start;
+                this.Hide();
+                GameEndDialog di = new GameEndDialog("The dealer wins by blackjack.");
+                di.ShowDialog();
+                this.Close();
+                
             }
 
             button1.Visible = true;
@@ -57,9 +62,12 @@ namespace Blackjack_GUI_temp1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
+            button2.Enabled = false;
+
             hit(game.playerhand);
             ++playercardcount;
-            updatePictureBoxes();
+            UpdatePictureBoxes();
             int temp = game.playerhand.sum();
 
             if (temp == 21)
@@ -76,20 +84,26 @@ namespace Blackjack_GUI_temp1
                 di.ShowDialog();
                 this.Close();
             }
+            button1.Enabled = true;
+            button2.Enabled = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            addtoPicturebox(game.dealerhand.cardlist[1], dealerbox1);
+            button1.Enabled = false;
+            button2.Enabled = false;
+
+            AddtoPicturebox(game.dealerhand.cardlist[1], dealerbox1);
             while (game.playerhand.sum() > game.dealerhand.sum())
             {
                 Thread.Sleep(1000);
                 
                 hit(game.dealerhand);
                 dealercardcount++;
-                updatePictureBoxes();
+                UpdatePictureBoxes();
                 
             }
+
 
             if(game.dealerhand.sum() > 21)
             {
@@ -114,10 +128,14 @@ namespace Blackjack_GUI_temp1
             }
 
 
+            button1.Enabled = true;
+            button2.Enabled = true;
+
+
         }
 
 
-        public void addtoPicturebox(Card card, PictureBox picturebox)
+        public void AddtoPicturebox(Card card, PictureBox picturebox)
         {
             if (card.Suit == null)
             {
@@ -132,27 +150,27 @@ namespace Blackjack_GUI_temp1
 
         }
 
-        public void updatePictureBoxes()
+        public void UpdatePictureBoxes()
         {
             switch (playercardcount)
             {
                 case 8:
-                    addtoPicturebox(game.playerhand.cardlist[7], playerbox7);
+                    AddtoPicturebox(game.playerhand.cardlist[7], playerbox7);
                     goto case 7;
                 case 7:
-                    addtoPicturebox(game.playerhand.cardlist[6], playerbox6);
+                    AddtoPicturebox(game.playerhand.cardlist[6], playerbox6);
                     goto case 6;
                 case 6:
-                    addtoPicturebox(game.playerhand.cardlist[5], playerbox5);
+                    AddtoPicturebox(game.playerhand.cardlist[5], playerbox5);
                     goto case 5;
                 case 5:
-                    addtoPicturebox(game.playerhand.cardlist[4], playerbox4);
+                    AddtoPicturebox(game.playerhand.cardlist[4], playerbox4);
                     goto case 4;
                 case 4:
-                    addtoPicturebox(game.playerhand.cardlist[3], playerbox3);
+                    AddtoPicturebox(game.playerhand.cardlist[3], playerbox3);
                     goto case 3;
                 case 3:
-                    addtoPicturebox(game.playerhand.cardlist[2], playerbox2);
+                    AddtoPicturebox(game.playerhand.cardlist[2], playerbox2);
                     break; ;
 
             }
@@ -160,22 +178,22 @@ namespace Blackjack_GUI_temp1
             switch (dealercardcount)
             {
                 case 8:
-                    addtoPicturebox(game.dealerhand.cardlist[7], dealerbox7);
+                    AddtoPicturebox(game.dealerhand.cardlist[7], dealerbox7);
                     goto case 7;
                 case 7:
-                    addtoPicturebox(game.dealerhand.cardlist[6], dealerbox6);
+                    AddtoPicturebox(game.dealerhand.cardlist[6], dealerbox6);
                     goto case 6;
                 case 6:
-                    addtoPicturebox(game.dealerhand.cardlist[5], dealerbox5);
+                    AddtoPicturebox(game.dealerhand.cardlist[5], dealerbox5);
                     goto case 5;
                 case 5:
-                    addtoPicturebox(game.dealerhand.cardlist[4], dealerbox4);
+                    AddtoPicturebox(game.dealerhand.cardlist[4], dealerbox4);
                     goto case 4;
                 case 4:
-                    addtoPicturebox(game.dealerhand.cardlist[3], dealerbox3);
+                    AddtoPicturebox(game.dealerhand.cardlist[3], dealerbox3);
                     goto case 3;
                 case 3:
-                    addtoPicturebox(game.dealerhand.cardlist[2], dealerbox2);
+                    AddtoPicturebox(game.dealerhand.cardlist[2], dealerbox2);
                     break; ;
 
             }
